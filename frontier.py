@@ -1,7 +1,8 @@
 class Frontier:
+
     """Really simple frontier implementation"""
 
-    def __init__(self, visit_queue = []):
+    def __init__(self, visit_queue=[]):
         self.visited = []
         self.to_visit = visit_queue
 
