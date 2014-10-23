@@ -23,3 +23,6 @@ class Frontier:
 
             self.visited.append(next_url)
             return next_url
+
+    def __iter__(self):
+        return iter(self.to_visit)
