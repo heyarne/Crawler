@@ -1,4 +1,5 @@
 class Frontier:
+    """Really simple frontier implementation"""
 
     def __init__(self, visit_queue = []):
         self.visited = []
@@ -6,6 +7,9 @@ class Frontier:
 
     def add_url(self, page_url):
         self.to_visit.append(page_url)
+
+    def add_urls(self, page_urls):
+        self.to_visit.extend(page_urls)
 
     def get_next_url(self):
         if self.to_visit:
