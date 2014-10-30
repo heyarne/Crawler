@@ -1,12 +1,10 @@
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-import urllib3
-
-http = urllib3.PoolManager()
+import urllib.request as urllib2
 
 class Parser():
     def getLinks(self, url):
-        response = http.request('GET', url)
+        response = urllib2.urlopen(url)
         soup = BeautifulSoup(response.read())
 
         list = []
