@@ -45,12 +45,12 @@ class Graph:
     def __contains__(self, n):
         return n in self.vertex_list
 
-    def add_edge(self, f, t, cost=0):
+    def add_edge(self, f, t, weight=0):
         if f not in self.vertex_list:
             nv = self.add_vertex(f)
         if t not in self.vertex_list:
             nv = self.add_vertex(t)
-        self.vertex_list[f].add_neighbor(self.vertex_list[t], cost)
+        self.vertex_list[f].add_neighbor(self.vertex_list[t], weight)
 
     def get_vertices(self):
         return self.vertex_list.keys()
