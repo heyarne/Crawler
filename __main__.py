@@ -9,7 +9,7 @@ parser = Parser()
 added_url = False
 for url in frontier:
     print(url)
-    print parser.getLinks(url)
+    print(parser.getLinks(url))
 
     frontier.add_urls(parser.getLinks(url))
 
