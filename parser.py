@@ -1,6 +1,7 @@
+from bs4 import BeautifulSoup
+from urlparse import urljoin
 import urlparse
 import urllib2
-from bs4 import BeautifulSoup
 
 class Parser():
     def getLinks(self, url):
@@ -9,8 +10,9 @@ class Parser():
 
         list = []
 
-        for link in soup.find_all('a'):
-            list.append(link.get('href'))
+        for anchor in soup.find_all('a'):
+            link = anchor.get('href')
+            list.append(urljoin(url, link))
         return list
 
 # parser = Parser()
