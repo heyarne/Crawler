@@ -25,4 +25,11 @@ class Frontier:
             return next_url
 
     def __iter__(self):
-        return iter(self.to_visit)
+        while self.to_visit:
+            # pop in python returns the last element of the list.
+            # to make it easier understandable we return the first one
+            next_url = self.to_visit[0]
+            self.to_visit = self.to_visit[1:]
+
+            self.visited.append(next_url)
+            yield next_url
