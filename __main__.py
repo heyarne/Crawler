@@ -1,18 +1,27 @@
 from frontier import Frontier
 from parser import Parser
+from graph import Graph
 
-# frontier = Frontier(['http://google.de', 'http://blog.fefe.de', 'http://facebook.com'])
-frontier = Frontier(['http://mysql12.f4.htw-berlin.de/crawl/d01.html',
-    'http://mysql12.f4.htw-berlin.de/crawl/d06.html', 'http://mysql12.f4.htw-berlin.de/crawl/d08.html'])
+frontier = Frontier([
+    'http://mysql12.f4.htw-berlin.de/crawl/d01.html',
+    'http://mysql12.f4.htw-berlin.de/crawl/d06.html',
+    'http://mysql12.f4.htw-berlin.de/crawl/d08.html'
+])
 parser = Parser()
+web_graph = Graph()
 
-added_url = False
 for url in frontier:
-    print(url)
-    print(parser.getLinks(url))
+    # get all links on page
+    links_on_page = parser.getLinks(url)
 
-    frontier.add_urls(parser.getLinks(url))
+    # build our webgraph
+    web_graph.add_vertex(url)
+    for link in links_on_page:
+        # third param is "weight", which is arbitrary for now
+        web_graph.add_edge(url, link, 1)
 
-    # if not added_url:
-    #     frontier.add_url('http://arne.in')
-    #     added_url = True
+    # hand links to the frontier to make sure they are all crawled
+    frontier.add_urls(links_on_page)
+
+for node in web_graph:
+    print(node)
