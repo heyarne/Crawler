@@ -7,7 +7,7 @@ class Frontier:
         self.to_visit = visit_queue
 
     def add_url(self, page_url):
-        if page_url not in self.visited and not in self.to_visit:
+        if page_url not in self.visited and page_url not in self.to_visit:
             self.to_visit.append(page_url)
 
     def add_urls(self, page_urls):
