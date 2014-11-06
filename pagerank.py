@@ -13,7 +13,7 @@ class Ranker():
         self.graph = copy.deepcopy(graph)
 
     def calculate_rank(self, delta=0):
-        all_nodes = self.graph.get_vertices()
+        all_nodes = self.graph.get_nodes()
         num_nodes = len(all_nodes)
         with_links = []
         without_links = []
@@ -36,7 +36,7 @@ class Ranker():
                 pass
 
     def should_abort(self, delta):
-        for node in self.graph.get_vertices():
+        for node in self.graph.get_nodes():
             if (abs(node.last_rank - node.rank) > delta):
                 return False
 

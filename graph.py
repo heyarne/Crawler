@@ -33,15 +33,15 @@ class Graph:
 
     def __init__(self):
         self.node_list = {}
-        self.num_vertices = 0
+        self.num_nodes = 0
 
-    def add_vertex(self, key):
-        self.num_vertices = self.num_vertices + 1
-        new_vertex = PageNode(key)
-        self.node_list[key] = new_vertex
-        return new_vertex
+    def add_node(self, key):
+        self.num_nodes = self.num_nodes + 1
+        new_node = PageNode(key)
+        self.node_list[key] = new_node
+        return new_node
 
-    def get_vertex(self, n):
+    def get_node(self, n):
         if n in self.node_list:
             return self.node_list[n]
         else:
@@ -52,13 +52,13 @@ class Graph:
 
     def add_edge(self, f, t):
         if f not in self.node_list:
-            self.add_vertex(f)
+            self.add_node(f)
         if t not in self.node_list:
-            self.add_vertex(t)
+            self.add_node(t)
 
         self.node_list[f].links_to(self.node_list[t])
 
-    def get_vertices(self):
+    def get_nodes(self):
         return self.node_list.keys()
 
     def __iter__(self):
