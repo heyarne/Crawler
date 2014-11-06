@@ -18,7 +18,7 @@ for url in frontier:
     web_graph.add_vertex(url)
     for link in links_on_page:
         # third param is "weight", which is arbitrary for now
-        web_graph.add_edge(url, link, 1)
+        web_graph.add_edge(url, link)
 
     # hand links to the frontier to make sure they are all crawled
     frontier.add_urls(links_on_page)
