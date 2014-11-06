@@ -22,9 +22,6 @@ class PageNode:
     def __str__(self):
         return str(self.id) + ' is linked to by: ' + str([x.id for x in self.out_links])
 
-    def get_connections(self):
-        return self.out_links
-
     def get_id(self):
         return self.id
 
@@ -58,7 +55,7 @@ class Graph:
 
         self.node_list[f].links_to(self.node_list[t])
 
-    def get_nodes(self):
+    def get_node_ids(self):
         return self.node_list.keys()
 
     def __iter__(self):

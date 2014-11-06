@@ -1,6 +1,7 @@
 from frontier import Frontier
 from parser import Parser
 from graph import Graph
+from pagerank import Ranker
 
 frontier = Frontier([
     'http://mysql12.f4.htw-berlin.de/crawl/d01.html',
@@ -25,3 +26,6 @@ for url in frontier:
 
 for node in web_graph:
     print(node)
+
+ranker = Ranker(web_graph, 0.95)
+ranker.calculate_rank(0.04)
