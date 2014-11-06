@@ -32,7 +32,7 @@ class Ranker():
         # the actual calculation starts here
         while not self.should_abort(delta):
             for node in self.graph:
-                rank = 0
+                rank = 0.0
                 for link in node.in_links:
                     rank += link.rank / len(link.out_links)
 
@@ -42,8 +42,12 @@ class Ranker():
                 rank *= self.curb_factor
                 rank += self.teleportation_rate / num_nodes
 
+                node.next_rank = rank
+
+            for node in self.graph:
                 node.last_rank = node.rank
-                node.rank = rank
+                node.rank = node.next_rank
+                node.next_rank = None
 
     def should_abort(self, delta):
         for node in self.graph:
@@ -51,3 +55,11 @@ class Ranker():
                 return False
 
         return True
+
+    def __str__(self):
+        long_str = ""
+
+        for node in self.graph:
+            long_str += str(node.short_id() + " has the rank " + str(node.rank)) + "\n"
+
+        return long_str

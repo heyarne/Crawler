@@ -26,7 +26,7 @@ class PageNode:
         return self.id
 
     def short_id(self):
-        return self.id[:self.id.rindex('/') + 1]
+        return self.id[self.id.rindex('/') + 1:]
 
 
 class Graph:

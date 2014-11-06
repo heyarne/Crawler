@@ -29,3 +29,4 @@ for node in web_graph:
 
 ranker = Ranker(web_graph, 0.95)
 ranker.calculate_rank(0.04)
+print(ranker)
