@@ -33,9 +33,10 @@ class Ranker():
         while not self.should_abort(delta):
             for node in self.graph:
                 rank = 0.0
+                # first summand of formula
                 for link in node.in_links:
                     rank += link.rank / len(link.out_links)
-
+                # second summand
                 for link in without_in_links:
                     rank += link.rank / num_nodes
 
