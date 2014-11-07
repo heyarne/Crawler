@@ -25,6 +25,6 @@ for url in frontier:
 for node in web_graph:
     print(node)
 
-ranker = Ranker(web_graph, 0.95)
-ranker.calculate_rank(0.04)
+ranker = Ranker(web_graph)
+ranker.calculate_rank(curb_factor=0.95, delta=0.04)
 print(ranker)
