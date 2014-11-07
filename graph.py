@@ -20,13 +20,16 @@ class PageNode:
         target.add_in_link(self)
 
     def __str__(self):
-        return str(self.short_id()) + ' is linked to by: ' + str([x.short_id() for x in self.in_links])
+        return str(self.short_id()) + ': ' + str([x.short_id() for x in self.out_links])
 
     def get_id(self):
         return self.id
 
     def short_id(self):
-        return self.id[self.id.rindex('/') + 1:]
+        base_name = self.id[self.id.rindex('/') + 1:]
+        without_ending = base_name[:base_name.rindex('.')]
+
+        return without_ending
 
 
 class Graph:

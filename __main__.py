@@ -16,10 +16,8 @@ for url in frontier:
     links_on_page = parser.getLinks(url)
 
     # build our webgraph
-    web_graph.add_node(url)
-    for link in links_on_page:
-        # third param is "weight", which is arbitrary for now
-        web_graph.add_edge(url, link)
+    for out_link in links_on_page:
+        web_graph.add_edge(url, out_link)
 
     # hand links to the frontier to make sure they are all crawled
     frontier.add_urls(links_on_page)
