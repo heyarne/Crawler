@@ -20,7 +20,7 @@ class PageNode:
         target.add_in_link(self)
 
     def __str__(self):
-        return str(self.short_id()) + ' is linked to by: ' + str([x.short_id() for x in self.out_links])
+        return str(self.short_id()) + ' is linked to by: ' + str([x.short_id() for x in self.in_links])
 
     def get_id(self):
         return self.id
