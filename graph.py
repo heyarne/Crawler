@@ -6,14 +6,14 @@ class PageNode:
 
     def __init__(self, key):
         self.id = key
-        self.out_links = []
-        self.in_links = []
+        self.out_links = set()
+        self.in_links = set()
 
     def add_out_link(self, neighbor):
-        self.out_links.append(neighbor)
+        self.out_links.add(neighbor)
 
     def add_in_link(self, neighbor):
-        self.in_links.append(neighbor)
+        self.in_links.add(neighbor)
 
     def links_to(self, target):
         self.add_out_link(target)
