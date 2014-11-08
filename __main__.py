@@ -12,8 +12,8 @@ parser = Parser()
 web_graph = Graph()
 
 for url in frontier:
-    # get all links on page
-    links_on_page = parser.getLinks(url)
+    # get outgoing links for the graph and content for tokenization
+    body, links_on_page = parser.parse(url)
 
     # build our webgraph
     for out_link in links_on_page:
