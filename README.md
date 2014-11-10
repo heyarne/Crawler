@@ -5,3 +5,5 @@ This repository contains the source code for a small search engine written in py
 ## Usage / Installation
 
 The code is written using python 3.4.2, you can find out which version you run using `$ python --version`. To install all dependencies run `$ pip install -r requirements.txt` in the root directory of this project.
+
+You can then run the main script by executing `python __main__.py`.
