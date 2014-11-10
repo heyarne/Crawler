@@ -58,6 +58,6 @@ class Ranker():
         long_str = ""
 
         for node in self.graph:
-            long_str += str(node.short_id() + " has the rank " + str(node.rank)) + "\n"
+            long_str += node.short_id() + " has the rank " + str(node.rank) + "\n"
 
         return long_str
