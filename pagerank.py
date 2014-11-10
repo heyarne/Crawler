@@ -46,7 +46,6 @@ class Ranker():
             for node in self.graph:
                 node.last_rank = node.rank
                 node.rank = node.next_rank
-                node.next_rank = None
 
     def should_abort(self, delta):
         for node in self.graph:

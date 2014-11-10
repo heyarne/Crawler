@@ -16,8 +16,15 @@ for url in frontier:
     body, links_on_page = parser.parse(url)
 
     # build our webgraph
+    node = web_graph.get_node(url)
+    if node is None:
+        node = web_graph.add_node(url)
+
     for out_link in links_on_page:
         web_graph.add_edge(url, out_link)
+
+    # attach the parsing data to the node for our tokenizer / indexer
+    node.body = body
 
     # hand links to the frontier to make sure they are all crawled
     frontier.add_urls(links_on_page)

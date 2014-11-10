@@ -50,6 +50,9 @@ class Graph:
         else:
             return None
 
+    def has_node(self, n):
+        return self.get_node(n) is not None
+
     def __contains__(self, n):
         return n in self.node_list
 
