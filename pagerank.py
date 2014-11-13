@@ -50,11 +50,11 @@ class Ranker():
 
 
     def should_abort(self, delta):
+        error_sum = 0.0
         for node in self.graph:
-            if (abs(node.last_rank - node.rank) > delta):
-                return False
+            error_sum += abs(node.last_rank - node.rank)
 
-        return True
+        return error_sum < delta
 
     def __str__(self):
         long_str = ""
