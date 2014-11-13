@@ -8,9 +8,6 @@ class Parser():
         soup = BeautifulSoup(response.read())
 
         document_text = soup.get_text()
-        links = []
-        for anchor in soup.find_all('a'):
-            link = anchor.get('href')
-            links.append(urljoin(url, link))
+        links = [urljoin(url, link.get('href')) for link in soup.find_all('a')]
 
         return document_text, links
