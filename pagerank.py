@@ -9,8 +9,8 @@ class Ranker():
         # leave the original graph untouched
         self.graph = copy.deepcopy(graph)
 
-    def calculate_rank(self, curb_factor=0.9, delta=0):
-        without_in_links = []
+    def calculate_rank(self, curb_factor=0.9, delta=0.04):
+        without_out_links = []
 
         # cache this as we'll reuse it often
         num_nodes = len(self.graph.get_node_ids())
@@ -23,19 +23,20 @@ class Ranker():
         for node in self.graph:
             node.last_rank = float("inf")
             node.rank = 1 / num_nodes
-
-            if not node.in_links:
-                without_in_links.append(node)
+            if not node.out_links:
+                without_out_links.append(node)
 
         # the actual calculation starts here
         while not self.should_abort(delta):
+            print (self)
+
             for node in self.graph:
                 rank = 0.0
                 # first summand of formula
                 for link in node.in_links:
                     rank += link.rank / len(link.out_links)
                 # second summand
-                for link in without_in_links:
+                for link in without_out_links:
                     rank += link.rank / num_nodes
 
                 rank *= curb_factor
@@ -46,6 +47,7 @@ class Ranker():
             for node in self.graph:
                 node.last_rank = node.rank
                 node.rank = node.next_rank
+
 
     def should_abort(self, delta):
         for node in self.graph:
