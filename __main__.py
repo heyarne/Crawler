@@ -2,6 +2,7 @@ from frontier import Frontier
 from parser import Parser
 from graph import Graph
 from pagerank import Ranker
+from indexer import Indexer
 
 frontier = Frontier([
     'http://mysql12.f4.htw-berlin.de/crawl/d01.html',
@@ -9,11 +10,15 @@ frontier = Frontier([
     'http://mysql12.f4.htw-berlin.de/crawl/d08.html'
 ])
 parser = Parser()
+indexer = Indexer()
 web_graph = Graph()
 
 for url in frontier:
     # get outgoing links for the graph and content for tokenization
     body, links_on_page = parser.parse(url)
+
+    # add document to indexer
+    indexer.add_document(url, body)
 
     # build our webgraph
     node = web_graph.get_node(url)
@@ -37,3 +42,8 @@ print()
 ranker = Ranker(web_graph)
 ranker.calculate_rank(curb_factor=0.95, delta=0.04)
 print(ranker)
+
+
+for k in indexer.index:
+    print(k, indexer.index[k])
+print(indexer.find('supervised'))
