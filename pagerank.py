@@ -1,13 +1,10 @@
-import copy
-
-
 class Ranker():
 
     """Implementation of the graph-based ranking algorithm"""
 
     def __init__(self, graph):
         # leave the original graph untouched
-        self.graph = copy.deepcopy(graph)
+        self.graph = graph
 
     def calculate_rank(self, curb_factor=0.9, delta=0.04):
         without_out_links = []
