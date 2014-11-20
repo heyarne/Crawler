@@ -47,4 +47,5 @@ for k in indexer.index:
     print(k, indexer.index[k])
 print(indexer.find('supervised'))
 
-print(scorer.calculate_weight())
+query = ["uppercase"]
+print(scorer.cosine_score(query))
