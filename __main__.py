@@ -3,6 +3,7 @@ from parser import Parser
 from graph import Graph
 from pagerank import Ranker
 from indexer import Indexer
+from scorer import Scorer
 
 frontier = Frontier([
     'http://mysql12.f4.htw-berlin.de/crawl/d01.html',
@@ -12,6 +13,7 @@ frontier = Frontier([
 parser = Parser()
 indexer = Indexer()
 web_graph = Graph()
+scorer = Scorer(indexer)
 
 for url in frontier:
     # get outgoing links for the graph and content for tokenization
@@ -47,3 +49,5 @@ print(ranker)
 for k in indexer.index:
     print(k, indexer.index[k])
 print(indexer.find('supervised'))
+
+print(scorer.calculate_weight())

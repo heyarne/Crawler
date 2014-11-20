@@ -7,8 +7,11 @@ class Indexer():
             'a', 'also', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'do'
             'for', 'have', 'is', 'in', 'it', 'of', 'or', 'see', 'so',
             'that', 'the', 'this', 'to', 'we']
+        self.doc_count = 0
 
     def add_document(self, docname, text):
+        self.doc_count += 1
+
         text = text.lower()
         for word in re.findall('\w+', text):
             if word not in self.stopwords:
@@ -25,3 +28,5 @@ class Indexer():
         word = word.lower()
         if word in self.index:
             return self.index[word]
+        else:
+            return {}
