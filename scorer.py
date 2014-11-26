@@ -53,11 +53,16 @@ class Scorer():
             # calculate w t,q
             wtq = self.term_weight(1, len(weight_list[query_term]))
 
+            # Go over every weighted term
             for word in weight_list:
+                # Go over every document that contains the weighted term
                 for doc in weight_list[word]:
+                    # Read the weight of the term in that specific doc from the list
                     term_weight_doc = weight_list[word][doc]
 
+                    # Use this to calculate wtd
                     wtd = self.term_weight(term_weight_doc, len(weight_list[query_term]))
+                    
                     scores[doc] = scores.get(doc, 0) + wtq * wtd
 
         # adjust length
