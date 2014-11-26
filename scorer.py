@@ -19,7 +19,7 @@ class Scorer():
 
     def tf(self, term, doc):
         """
-        Amount one term occurs in a specific document
+        Term frequency; how often one term occurs in a specific document
         """
         return self.indexer.find(term).get(doc, 0)
 
@@ -30,35 +30,42 @@ class Scorer():
         """
         return self.idf(term) * self.tf(term, doc)
 
-    def calculate_postings_list(self):
-        postings_list = {}
+    def term_weight(self, tf, df):
+        return (1 + log10(tf)) * log10(self.indexer.doc_count / df)
+
+    def calculate_weight_list(self):
+        weight_list = {}
 
         for term in self.indexer.index:
-            postings_list[term] = {}
+            weight_list[term] = {}
             for doc in self.indexer.find(term):
-                postings_list[term][doc] = self.tfidf(term, doc)
+                weight_list[term][doc] = self.tfidf(term, doc)
 
-        return postings_list
+        return weight_list
 
     def cosine_score(self, query):
         scores = {}
         length = {}
 
-        postings_list = self.calculate_postings_list()
+        weight_list = self.calculate_weight_list()
 
-        for term in query:
-            for term in postings_list:
-                for doc in term:
-                    tf_query = query.count(term)
-                    tfidf_query = log10(len(query)) * tf_query
-                    scores[doc] = scores.get(doc, 0) + postings_list.get(term, {}).get(doc, 0) + tf_query
+        for query_term in query:
+            # calculate w t,q
+            wtq = self.term_weight(1, len(weight_list[query_term]))
 
+            for word in weight_list:
+                for doc in weight_list[word]:
+                    term_weight_doc = weight_list[word][doc]
+
+                    wtd = self.term_weight(term_weight_doc, len(weight_list[query_term]))
+                    scores[doc] = scores.get(doc, 0) + wtq * wtd
+
+        # adjust length
         for doc in scores:
             if self.indexer.doc_lengths.get(doc):
                 scores[doc] /= self.indexer.doc_lengths.get(doc)
             else:
                 scores[doc] = 0
 
-        print(scores)
-        #sorted_scores = sorted(scores.items(), key=operator.itemgetter(1))
-        #print(sorted_scores)
+        sorted_scores = sorted(scores.items(), key=operator.itemgetter(1))
+        return sorted_scores

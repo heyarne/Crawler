@@ -33,19 +33,20 @@ for url in frontier:
     # hand links to the frontier to make sure they are all crawled
     frontier.add_urls(links_on_page)
 
-for node in web_graph:
-    print(node)
-
-print()
+# for node in web_graph:
+#     print(node)
+#
+# print()
 
 ranker = Ranker(web_graph)
 ranker.calculate_rank(curb_factor=0.95, delta=0.04)
 print(ranker)
 
+#
+# for k in indexer.index:
+#     print(k, indexer.index[k])
+# print(indexer.find('supervised'))
 
-for k in indexer.index:
-    print(k, indexer.index[k])
-print(indexer.find('supervised'))
-
-query = ["uppercase"]
+# query = ["index"]
+query = ['tokens', 'classification']
 print(scorer.cosine_score(query))
