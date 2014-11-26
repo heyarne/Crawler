@@ -48,9 +48,10 @@ class Scorer():
             lengths[document] = self.vector_length(terms, document)
 
         for query_term in query:
+            # get all documents in our index for our query term
             posting_list = self.indexer.find(query_term)
-            wtq = self.term_weight(query.count(query_term), 1)
             df = len(posting_list.keys())
+            wtq = self.term_weight(query.count(query_term), df)
 
             for document in posting_list:
                 tf = 0
