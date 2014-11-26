@@ -8,7 +8,6 @@ class Indexer():
             'for', 'have', 'is', 'in', 'it', 'of', 'or', 'see', 'so',
             'that', 'the', 'this', 'to', 'we']
         self.doc_count = 0
-        self.doc_lengths = {}
 
     def add_document(self, docname, text):
         self.doc_count += 1
@@ -23,8 +22,6 @@ class Indexer():
                         self.index[word][docname] = 1
                     else:
                         self.index[word][docname] = self.index[word][docname] + 1
-
-        self.doc_lengths[docname] = len(text)
 
     def find(self, word):
         word = word.lower()
