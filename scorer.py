@@ -52,12 +52,11 @@ class Scorer():
             wtq = self.term_weight(query.count(query_term), 1)
             df = len(posting_list.keys())
 
-            for documents in posting_list:
+            for document in posting_list:
                 tf = 0
                 for tfd in flipped_index.get(query_term, {}):
                     tf += tfd
-                #wtd = self.term_weight(tf, df)
-                wtd = 1
+                wtd = self.term_weight(tf, df)
                 scores[document] = scores.get(document, 0) + wtd * wtq
 
         for doc in scores:
