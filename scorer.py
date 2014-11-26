@@ -47,32 +47,23 @@ class Scorer():
         for document, terms in flipped_index.items():
             lengths[document] = self.vector_length(terms, document)
 
-        print(lengths)
-
         for query_term in query:
             posting_list = self.indexer.find(query_term)
+            wtq = self.term_weight(query.count(query_term), 1)
+            df = len(posting_list.keys())
 
-            # calculate w t,q
-            wtq = self.term_weight(1, len(weight_list[query_term]))
+            for documents in posting_list:
+                tf = 0
+                for tfd in flipped_index.get(query_term, {}):
+                    tf += tfd
+                #wtd = self.term_weight(tf, df)
+                wtd = 1
+                scores[document] = scores.get(document, 0) + wtd * wtq
 
-            # Go over every weighted term
-            for word in weight_list:
-                # Go over every document that contains the weighted term
-                for doc in weight_list[word]:
-                    # Read the weight of the term in that specific doc from the list
-                    term_weight_doc = weight_list[word][doc]
+        for doc in scores:
+            scores[doc] = scores[doc] / lengths[doc]
 
-                    # Use this to calculate wtd
-                    wtd = self.term_weight(term_weight_doc, len(weight_list[query_term]))
-
-                    scores[doc] = scores.get(doc, 0) + wtq * wtd
-
-        # adjust length
-        # for doc in scores:
-        #     if self.indexer.doc_lengths.get(doc):
-        #         scores[doc] /= self.indexer.doc_lengths.get(doc)
-        #     else:
-        #         scores[doc] = 0
+        print(scores)
 
         sorted_scores = sorted(scores.items(), key=operator.itemgetter(1))
         return sorted_scores

@@ -48,5 +48,5 @@ print(ranker)
 # print(indexer.find('supervised'))
 
 # query = ["index"]
-query = ['tokens', 'classification']
+query = ['tokens']
 print(scorer.cosine_score(query))
