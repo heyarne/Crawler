@@ -13,7 +13,6 @@ frontier = Frontier([
 parser = Parser()
 indexer = Indexer()
 web_graph = Graph()
-scorer = Scorer(indexer)
 
 for url in frontier:
     # get outgoing links for the graph and content for tokenization
@@ -48,5 +47,6 @@ print(ranker)
 # print(indexer.find('supervised'))
 
 # query = ["index"]
+scorer = Scorer(indexer)
 query = ['tokens']
 print(scorer.cosine_score(query))

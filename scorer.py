@@ -4,6 +4,7 @@ import operator
 class Scorer():
     def __init__(self, indexer):
         self.indexer = indexer
+        self.flipped_index = self.flip_index(self.indexer.index)
 
     def term_weight(self, tf, df):
         """
@@ -41,12 +42,11 @@ class Scorer():
     def cosine_score(self, query):
         print(str(query) + ':')
 
-        flipped_index = self.flip_index(self.indexer.index)
         scores = {}
         lengths = {}
 
         # calculate the length of each document
-        for document, terms in flipped_index.items():
+        for document, terms in self.flipped_index.items():
             lengths[document] = self.vector_length(terms, document)
 
         for query_term in query:
