@@ -52,7 +52,12 @@ queries = [['tokens'], ['index'], ['classification'], ['tokens', 'classification
 for query in queries:
     print(str(query) + ':')
     print('non-weighted:')
-    print(scorer.cosine_score(query))
+    score_list = scorer.cosine_score(query) # [(doc, score), (doc2, score2), ...]
+    for tupel in score_list:
+        print(tupel)
+    print("________________________________")
     print('weighted with pagerank:')
-    print(scorer.weighted_score(query))
-    print()
+    score_list2 = scorer.weighted_score(query) #[(doc, score), (doc2, score2),...]
+    for tupel in score_list2:
+        print(tupel)
+    print("________________________________")
