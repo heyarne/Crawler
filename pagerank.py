@@ -53,6 +53,9 @@ class Ranker():
 
         return error_sum < delta
 
+    def get_rank(self, document):
+        return self.graph.get_node(document).rank
+
     def __str__(self):
         long_str = ""
 

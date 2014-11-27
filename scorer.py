@@ -2,9 +2,10 @@ from math import log10, sqrt
 import operator
 
 class Scorer():
-    def __init__(self, indexer):
+    def __init__(self, indexer, ranker):
         self.indexer = indexer
         self.flipped_index = self.flip_index(self.indexer.index)
+        self.ranker = ranker
 
     def term_weight(self, tf, df):
         """
@@ -40,8 +41,6 @@ class Scorer():
         return sqrt(length)
 
     def cosine_score(self, query):
-        print(str(query) + ':')
-
         scores = {}
         lengths = {}
 
@@ -64,4 +63,14 @@ class Scorer():
             scores[doc] = scores[doc] / lengths[doc] / self.vector_length(query)
 
         ascending_scores = sorted(scores.items(), key=operator.itemgetter(1))
+        return list(reversed(ascending_scores))
+
+    def weighted_score(self, query):
+        cosine_scores = self.cosine_score(query)
+
+        weighted = {}
+        for document, score in cosine_scores:
+            weighted[document] = score * self.ranker.get_rank(document)
+
+        ascending_scores = sorted(weighted.items(), key=operator.itemgetter(1))
         return list(reversed(ascending_scores))

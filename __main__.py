@@ -47,6 +47,12 @@ print(ranker)
 # print(indexer.find('supervised'))
 
 # query = ["index"]
-scorer = Scorer(indexer)
-query = ['tokens']
-print(scorer.cosine_score(query))
+scorer = Scorer(indexer, ranker)
+queries = [['tokens'], ['index'], ['classification'], ['tokens', 'classification']]
+for query in queries:
+    print(str(query) + ':')
+    print('non-weighted:')
+    print(scorer.cosine_score(query))
+    print('weighted with pagerank:')
+    print(scorer.weighted_score(query))
+    print()
