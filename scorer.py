@@ -39,6 +39,8 @@ class Scorer():
         return sqrt(length)
 
     def cosine_score(self, query):
+        print(str(query) + ':')
+
         flipped_index = self.flip_index(self.indexer.index)
         scores = {}
         lengths = {}
@@ -54,18 +56,12 @@ class Scorer():
             df = len(posting_list.keys())
             wtq = self.term_weight(query.count(query_term), df)
 
-            tf = 0
-            for document, tfd in posting_list.items():
-                tf += tfd
-
-            for document in posting_list:
+            for document, tf in self.indexer.find(query_term).items():
                 wtd = self.term_weight(tf, df)
                 scores[document] = scores.get(document, 0) + wtd * wtq
 
         for doc in scores:
-            scores[doc] = scores[doc] / lengths[doc]
+            scores[doc] = scores[doc] / lengths[doc] / self.vector_length(query)
 
-        print(scores)
-
-        sorted_scores = sorted(scores.items(), key=operator.itemgetter(1))
-        return sorted_scores
+        ascending_scores = sorted(scores.items(), key=operator.itemgetter(1))
+        return list(reversed(ascending_scores))
