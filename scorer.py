@@ -26,13 +26,13 @@ class Scorer():
 
         return flipped_index
 
-    def vector_length(self, terms, document):
+    def vector_length(self, terms, document=None):
         length = 0
         for term in terms:
             posting_list = self.indexer.find(term)
             # the term frequency is mapped to each document; however, when we
             # want to get the vector length of our query, it's different
-            tf = posting_list.get(document, document.count(term))
+            tf = posting_list.get(document, 1)
             df = len(posting_list.keys())
 
             length += self.term_weight(tf, df) ** 2
@@ -50,13 +50,15 @@ class Scorer():
         for query_term in query:
             # get all documents in our index for our query term
             posting_list = self.indexer.find(query_term)
+
             df = len(posting_list.keys())
             wtq = self.term_weight(query.count(query_term), df)
 
+            tf = 0
+            for document, tfd in posting_list.items():
+                tf += tfd
+
             for document in posting_list:
-                tf = 0
-                for tfd in flipped_index.get(query_term, {}):
-                    tf += tfd
                 wtd = self.term_weight(tf, df)
                 scores[document] = scores.get(document, 0) + wtd * wtq
 
